@@ -1,9 +1,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/reveal.js/css/reveal.css">
-		<link rel="stylesheet" href="/reveal.js/css/theme/white.css">
-		<link rel="stylesheet" href="/reveal.js/lib/css/zenburn.css">
+		<link rel="stylesheet" href="./node_modules/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="./node_modules/reveal.js/css/theme/white.css">
+		<link rel="stylesheet" href="./node_modules/reveal.js/lib/css/zenburn.css">
 	</head>
 	<body>
 		<div class="reveal">
@@ -50,6 +50,17 @@
 					<img src="images/postcss-core-transparent.png">
 				</section>
 				<section>
+					<h3>Usage</h3>
+					<pre>
+						<code contenteditable>
+let postcss = require('postcss');
+postcss([ plugin1, plugin2 ])
+	.process(css)
+	.then( result => console.log(result.css) );
+						</code>
+					</pre>
+				</section>
+				<section>
 					<p class="quote">More than 200 plugins</p>
 					<p>Plugins list (Github)</p>
 					<p class="quote">PostCSS.parts</p>
@@ -60,20 +71,25 @@
 					<img src="images/postcssparts.png">
 				</section>
 				<section>
-					<h3>Usage</h3>
+					<h3>Besoin</h3>
 					<pre>
-						<code class="hljs scss" contenteditable>
-let postcss = require('postcss');
-postcss([ plugin1, plugin2 ])
-	.process(css)
-	.then( result => console.log(result.css) );
+						<code class="css" contenteditable>
+<!-- input -->
+.header--title {
+    font-size: 22px;
+}
+
+<!-- output -->
+.header--title {
+    font-size: 1.375rem;
+}
 						</code>
 					</pre>
 				</section>
 				<section>
 					<h3>Plugin</h3>
 					<pre>
-						<code class="hljs scss" contenteditable>
+						<code contenteditable>
 function (css) {
 	css.eachDecl( decl => {
 		decl.value = decl.value.replace(/\d+rem/, rem => {
@@ -150,8 +166,8 @@ function (css) {
 				padding: 25px;
 			}
 		</style>
-		<script src="./reveal.js/lib/js/head.min.js"></script>
-		<script src="./reveal.js/js/reveal.js"></script>
+		<script src="./node_modules/reveal.js/lib/js/head.min.js"></script>
+		<script src="./node_modules/reveal.js/js/reveal.js"></script>
 		<script>
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
@@ -159,10 +175,10 @@ function (css) {
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
-					{ src: 'reveal.js/plugin/markdown/marked.js' },
-					{ src: 'reveal.js/plugin/markdown/markdown.js' },
-					{ src: 'reveal.js/plugin/notes/notes.js', async: true },
-					{ src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: './node_modules/reveal.js/plugin/markdown/marked.js' },
+					{ src: './node_modules/reveal.js/plugin/markdown/markdown.js' },
+					{ src: './node_modules/reveal.js/plugin./notes/notes.js', async: true },
+					{ src: './node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
 		</script>
