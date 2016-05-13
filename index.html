@@ -1,0 +1,170 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="/reveal.js/css/theme/white.css">
+		<link rel="stylesheet" href="/reveal.js/lib/css/zenburn.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section class="intro">
+					<img src="/images/postcss.png" alt="PostCSS Logo" class="img">
+					<h2 class="intro--subtitle">The Shape of CSS to come</h2>
+				</section>
+				<section>
+					<h2 class="intro">Historique</h2>
+					<img src="/images/tj-holowaychuk.jpg" alt="" class="img-as-is img-rounded img-small">
+				</section>
+				<section>
+					<h3>ReWork(2013)</h3>
+					<img src="/images/tj-holowaychuk.jpg" alt="" class="img-as-is img-rounded img-small">
+					<p>TJ Holowaychuk</p>
+					<p class="small">Victoria, BC, Canada</p>
+				</section>
+				<section>
+					<p class="quote">Several months ago I started a project named Rework, a very fast, simple, flexible, and <mark>modular CSS preprocessor</mark>.</p>
+					<p class="quote fragment fade-up">The biggest and most obvious question I get is how this tool compares to something like Stylus, LESS, or Sass, and why would you want to use it.</p>
+				</section>
+				<section>
+					<p class="quote">The simple answer is that Rework caters to a<br><mark>different audience</mark>, and provide you the <mark>flexibility to craft the preprocessor you want</mark>, not the choices the author(s) have force on you.</p>
+					<a class="src fragment fade-up" href="http://tjholowaychuk.tumblr.com/post/44267035203/modular-css-preprocessing-with-rework" target="_blank">http://tjholowaychuk.tumblr.com/post/44267035203/modular-css-preprocessing-with-rework</a>
+				</section>
+				<section>
+					<h2 class="intro">Évolution</h2>
+				</section>
+				<section class="russia"></section>
+				<section>
+					<h3>PostCSS(2013)</h3>
+					<img src="/images/andrey-sitnik.jpg" alt="" class="img-as-is img-rounded img-small">
+					<p>Andrey Sitnik</p>
+					<p class="small">Saint Petersburg, Russia</p>
+					<img src="images/evilmartians.svg" alt="" width="200px">
+				</section>
+				<section>
+					<p class="quote">PostCSS is a tool for <mark>transforming styles with JS plugins.</mark></p>
+					<p class="quote fragment fade-up">These plugins can <mark>lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.</mark></p>
+					<p class="quote fragment fade-up">PostCSS is used by industry leaders including <mark>Wikipedia, Twitter, Alibaba, and JetBrains</mark>. The <mark>Autoprefixer PostCSS plugin</mark> is one of the most popular CSS processors.</p>
+				</section>
+				<section>
+					<img src="images/postcss-core-transparent.png">
+				</section>
+				<section>
+					<p class="quote">More than 200 plugins</p>
+					<p>Plugins list (Github)</p>
+					<p class="quote">PostCSS.parts</p>
+					<a href="https://github.com/postcss/postcss/blob/master/docs/plugins.md" class="src">https://github.com/postcss/postcss/blob/master/docs/plugins.md</a><br>
+					<a href="http://postcss.parts/" class="src">postcss.parts</a>
+				</section>
+				<section data-transition="zoom fade-out">
+					<img src="images/postcssparts.png">
+				</section>
+				<section>
+					<h3>Usage</h3>
+					<pre>
+						<code class="hljs scss" contenteditable>
+let postcss = require('postcss');
+postcss([ plugin1, plugin2 ])
+	.process(css)
+	.then( result => console.log(result.css) );
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Plugin</h3>
+					<pre>
+						<code class="hljs scss" contenteditable>
+function (css) {
+	css.eachDecl( decl => {
+		decl.value = decl.value.replace(/\d+rem/, rem => {
+			return 16 * parseFloat(rem) + 'px';
+		});
+	});
+};
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+		<style>
+			.slide-background.russia {
+				background-image: url('/images/fromrussia.jpg');
+				background-size: contain;
+				background-color: black;
+			}
+			.slide-background.intro {
+				background: rgb(230,223,170);
+			}
+			.reveal mark {
+				background: teal;
+				color: white;
+			}
+			.reveal section img {
+				border: none;
+				box-shadow: none;
+			}
+			.reveal section.intro img.img {
+				max-width: 500px;
+				text-align: left;
+				float: left;
+			}
+			.reveal section img.img-small {
+				max-width: 200px;
+			}
+			.reveal section img.img-rounded {
+				border-radius: 99px;
+			}
+			.reveal h2 {
+				border-bottom: 1px solid rgba(0,0,0,0.05);
+				padding-bottom: 10px;
+			}
+			.reveal h3 {
+				text-transform: initial;
+			}
+			.reveal h2.intro--subtitle {
+				line-height: 1;
+				margin: 0;
+				float: left;
+				padding: 0;
+				border-bottom: none;
+				color: rgb(60,145,195);
+				text-align: left;
+			}
+			.reveal p {
+				padding: 0;
+				margin: 0;
+			}
+			.reveal p.quote {
+				margin-bottom: 20px;
+			}
+			.reveal p.small {
+				font-size: 24px;
+				padding: 0;
+			}
+			a.src {
+				font-size: 17px;
+				opacity: .5;
+			}
+			.reveal pre {
+				background: #3f3f3f;
+				padding: 25px;
+			}
+		</style>
+		<script src="/reveal.js/lib/js/head.min.js"></script>
+		<script src="/reveal.js/js/reveal.js"></script>
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'reveal.js/plugin/markdown/marked.js' },
+					{ src: 'reveal.js/plugin/markdown/markdown.js' },
+					{ src: 'reveal.js/plugin/notes/notes.js', async: true },
+					{ src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
