@@ -9,16 +9,20 @@
 		<div class="reveal">
 			<div class="slides">
 				<section class="intro">
-					<img src="/images/postcss.png" alt="PostCSS Logo" class="img">
-					<h2 class="intro--subtitle">The Shape of CSS to come</h2>
+					<div class="intro-content">
+						<h2 class="intro--subtitle"><strong>PostCSS</strong>The Shape of CSS to come</h2>
+						<span class="intro--text">A presentation about css in 45 slides</span>
+					</div>
+				</section>
+				<section>
+					<img src="images/postcss.png" alt="PostCSS Logo" class="img" width="300">
 				</section>
 				<section>
 					<h2 class="intro">Historique</h2>
-					<img src="/images/tj-holowaychuk.jpg" alt="" class="img-as-is img-rounded img-small">
 				</section>
 				<section>
 					<h3>ReWork(2013)</h3>
-					<img src="/images/tj-holowaychuk.jpg" alt="" class="img-as-is img-rounded img-small">
+					<img src="images/tj-holowaychuk.jpg" alt="" class="img-as-is img-rounded img-small">
 					<p>TJ Holowaychuk</p>
 					<p class="small">Victoria, BC, Canada</p>
 				</section>
@@ -36,7 +40,7 @@
 				<section class="russia"></section>
 				<section>
 					<h3>PostCSS(2013)</h3>
-					<img src="/images/andrey-sitnik.jpg" alt="" class="img-as-is img-rounded img-small">
+					<img src="images/andrey-sitnik.jpg" alt="" class="img-as-is img-rounded img-small">
 					<p>Andrey Sitnik</p>
 					<p class="small">Saint Petersburg, Russia</p>
 					<img src="images/evilmartians.svg" alt="" width="200px">
@@ -50,7 +54,7 @@
 					<img src="images/postcss-core-transparent.png">
 				</section>
 				<section>
-					<h3>Usage</h3>
+					<h3>Usage le plus simple</h3>
 					<pre>
 						<code contenteditable>
 let postcss = require('postcss');
@@ -61,14 +65,344 @@ postcss([ plugin1, plugin2 ])
 					</pre>
 				</section>
 				<section>
+					<h3>Usage (Gulp)</h3>
+					<pre>
+						<code contenteditable>
+var postcss = require('gulp-postcss');
+
+var pseudoEnter = require('postcss-pseudo-class-enter');
+var colorFunction = require('postcss-color-function');
+var postcssZindex = require('postcss-zindex');
+
+gulp.task('postcss', function() {
+    var processors = [
+        colorFunction(
+             object
+        ),
+        pseudoEnter(),
+        postcssZindex()		
+     ];
+}
+						</code>
+					</pre>
+				</section>
+				<section>
 					<p class="quote">More than 200 plugins</p>
-					<p>Plugins list (Github)</p>
+					<p>Github</p>
 					<p class="quote">PostCSS.parts</p>
 					<a href="https://github.com/postcss/postcss/blob/master/docs/plugins.md" class="src">https://github.com/postcss/postcss/blob/master/docs/plugins.md</a><br>
 					<a href="http://postcss.parts/" class="src">postcss.parts</a>
 				</section>
 				<section data-transition="zoom fade-out">
+					<img src="images/githubrepo.png">
+				</section>
+				<section data-transition="zoom fade-out">
 					<img src="images/postcssparts.png">
+				</section>
+				<section data-transition="zoom fade-out">
+					<img src="images/insideparts.png">
+				</section>
+				<section data-transition="zoom fade-out">
+					<h3>Types de plugins</h3>
+					<p>Aucun "input" de la part de l'utilisateur</p>
+					<p><em>(Optimisation / Statistiques / Analyse / Fallback)</em></p>
+					<br><br>
+					<p>Sugar Coating</p>
+					<p><em>(CSS4 Syntax (Transpiler) / Nouvelles syntaxes / Conversions explicites)</em>	</p>
+				</section>
+				<section>
+					<h3>CSS Nano(Pack) - plus que de la minification</h3>
+					<pre>
+						<code class="css" contenteditable>
+/* normalize selectors */
+h1::before, h1:before {
+h1:before {
+
+/* reduce shorthand even further */
+margin: 10px 20px 10px 20px;
+margin: 10px 20px;
+
+/* reduce color values */
+color: #ff0000;
+color: red;
+
+/* reduce position values */
+background-position: bottom right;
+background-position: 100% 100%;
+						</code>
+					</pre>
+				</section>
+				<section>
+				<table>
+					<tbody>
+						
+					</tbody>
+					<tr>
+						<td>Original (gzip)</td>
+						<td>275 B</td>
+					</tr>
+					<td>Minified (gzip)</td>
+					<td>110 B</td>
+					<tr>
+						<td>Difference</td>
+						<td>165 B</td>
+					</tr>
+					<tr>
+						<td>Percent</td>
+						<td>40%</td>
+					</tr>
+					</tbody>
+				</table>
+				</section>
+				<section>
+					<h3>Problème</h3>
+					<img src="images/dory.jpg" alt="" width="300">
+					<pre>
+						<code class="css" contenteditable>
+a {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
+					</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Solution</h3>
+					<p>Just write normal CSS according to the latest W3C specs and Autoprefixer will produce the code for old browsers.</p>
+					<pre>
+						<code class="css" contenteditable>
+    a {
+        display: flex;
+    }
+					</code>
+					</pre>
+				</section>
+				<section>
+					<p>Le tout dans les deux sens</p>
+					<pre>
+						<code class="css" contenteditable>
+<!--input -->
+a {
+    -webkit-border-radius: 5px;
+        border-radius: 5px;
+}
+
+<!--output -->
+a {
+	border-radius: 5px;
+}
+
+					</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Cache Buster</h3>
+					<pre>
+						<code>
+.foo {
+    background-image : url('../images/index/logo.png');
+}
+
+// options dont : mtime, checksum
+.foo {
+    background-image : url('../images/index/logo.png?v14f32a475b8')
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Problème</h3>
+					<pre>
+						<code class="css" contenteditable>
+<!-- input -->
+.modal {
+    z-index: 10
+}
+
+...
+
+.modal-overlay {
+    z-index: 5500
+}
+
+...
+
+.fixed-banner {
+    z-index: 9999
+}
+					</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Solution</h3>
+					<pre>
+						<code class="css" contenteditable>
+<!-- output -->
+.modal {
+    z-index: 1
+}
+
+...
+
+.modal-overlay {
+    z-index: 2
+}
+
+...
+
+.fixed-banner {
+    z-index: 3
+}
+					</code>
+					</pre>
+				</section>
+				<section>
+					<img src="images/wiki.jpg" alt="">
+				</section>
+				<section>
+					<pre>
+						<code>
+a {
+    left: 10px;
+    text-align: left;
+}
+
+// rtl
+
+a {
+    right: 10px;
+    text-align: right;
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>CSS4 Syntax</h3>
+					<pre>
+						<code class="css" contenteditable>
+@custom-selector --heading h1, h2, h3, h4, h5, h6;
+
+.post-article --heading {
+    margin-top: calc(10 * var(--row));
+    color: color( var(--mainColor) blackness(+20%) );
+    font-variant-caps: small-caps;
+}						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>custom media queries</h3>
+					<pre>
+						<code>
+@custom-media --small-viewport (max-width: 30em);
+
+@media (--small-viewport) {
+    /* styles for small viewport */
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>custom media queries</h3>
+					<pre>
+						<code>
+.brand {
+    font-size: 16px;
+    @media (--small-viewport) {
+        /* styles for small viewport */
+        font-size: 12px;
+    }
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Sugar Coating</h3>
+					<pre>
+						<code>
+.boo img {
+    image-size: responsive;
+}
+
+// result
+.boo img {
+  max-width:100%;
+  height:auto;
+  display:block;
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Grille / Abstraction</h3>
+					<pre>
+						<code class="css" contenteditable>
+.card {
+  lost-row: 1/3;
+}
+						</code>
+					</pre>
+				</section>
+								<section>
+					<h3>Grille - résultat</h3>
+					<pre>
+						<code class="css" contenteditable>
+.card {
+  width: calc(99.99% * 1/2 - 7.5px);
+}
+
+.card:nth-child(n) {
+  float: left;
+  margin-right: 15px;
+  clear: none;
+}
+
+.card:last-child,
+.card:nth-child(2n) {
+  margin-right: 0;
+}
+
+.card:nth-child(2n+1) {
+  clear: left;
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<img src="images/grid.png" alt="">
+				</section>
+				<section>
+					<h3>PostCSS Colorblind</h3>
+					<img src="images/colorblind-before.jpg" alt="" width="450px">
+					<img src="images/colorblind-after.jpg" alt="" width="450px">
+				</section>
+				<section>
+					<h3>POSTCss Colorblind</h3>
+					<pre>
+						<code>
+// terminal
+$ npm install postcss-colorblind --save-dev
+
+// gulpfile.js
+var colorblind = require("postcss-colorblind");
+
+gulp.task('postcss', function() {
+    var processors = [
+        colorFunction(
+             object
+        ),
+        pseudoEnter(),
+        postcssZindex(),
+        colorblind(tritanomaly)
+     ];
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Les plugins = JS</h3>
+					<p>Simple a créer</p>
 				</section>
 				<section>
 					<h3>Besoin</h3>
@@ -87,16 +421,46 @@ postcss([ plugin1, plugin2 ])
 					</pre>
 				</section>
 				<section>
+					<p>Sachant que 16px = 1rem</p>
+				</section>
+				<section>
 					<h3>Plugin</h3>
 					<pre>
 						<code contenteditable>
 function (css) {
-	css.eachDecl( decl => {
-		decl.value = decl.value.replace(/\d+rem/, rem => {
-			return 16 * parseFloat(rem) + 'px';
-		});
-	});
+    css.eachDecl( decl => {
+        decl.value = decl.value.replace(/\d+rem/, rem => {
+            return 16 * parseFloat(rem) + 'px';
+        });
+    });
 };
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Hype</h3>
+				</section>
+				<section>
+					<img src="images/bootstrap5.png" alt="">
+				</section>
+				<section>
+					<img src="images/brenfrain.png" alt="">
+				</section>
+				<section>
+					<img src="images/listapart.png" alt="">
+				</section>
+				<section>
+					<h3>
+						Have fun</h3>
+					<pre>
+						<code>
+.canada {
+    colour: #efefef!sorry;
+}
+
+.span {
+    colour: grey;
+}
 						</code>
 					</pre>
 				</section>
@@ -104,7 +468,7 @@ function (css) {
 		</div>
 		<style>
 			.slide-background.russia {
-				background-image: url('/images/fromrussia.jpg');
+				background-image: url('images/fromrussia.jpg');
 				background-size: contain;
 				background-color: black;
 			}
@@ -145,6 +509,26 @@ function (css) {
 				border-bottom: none;
 				color: rgb(60,145,195);
 				text-align: left;
+				font-weight: 300;
+			}
+			.reveal h2.intro--subtitle strong {
+				color: black;
+				font-weight: 700;
+				text-transform: uppercase;
+				float: left;
+				width: 100%;
+				font-size: 100px;
+				letter-spacing: -2px;
+			}
+			.reveal h2.intro--subtitle span {
+				text-align: right;
+				color: black;
+			}
+			.intro--text {
+				float: right;
+				text-transform: uppercase!important;
+				font-size: 28px!important;
+				margin-top: 6px!important;
 			}
 			.reveal p {
 				padding: 0;
@@ -164,6 +548,11 @@ function (css) {
 			.reveal pre {
 				background: #3f3f3f;
 				padding: 25px;
+			}
+			.intro-content {
+				width: 100%;
+				float: left;
+				border-bottom: 1px solid black!important;
 			}
 		</style>
 		<script src="./node_modules/reveal.js/lib/js/head.min.js"></script>
