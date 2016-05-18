@@ -54,17 +54,6 @@
 					<img src="images/postcss-core-transparent.png">
 				</section>
 				<section>
-					<h3>Usage le plus simple</h3>
-					<pre>
-						<code contenteditable>
-let postcss = require('postcss');
-postcss([ plugin1, plugin2 ])
-	.process(css)
-	.then( result => console.log(result.css) );
-						</code>
-					</pre>
-				</section>
-				<section>
 					<h3>Usage (Gulp)</h3>
 					<pre>
 						<code contenteditable>
@@ -83,11 +72,11 @@ gulp.task('postcss', function() {
         postcssZindex()		
      ];
 }
-						</code>
+</code>
 					</pre>
 				</section>
 				<section>
-					<p class="quote">More than 200 plugins</p>
+					<p class="quote">Plus de 200 plugins</p>
 					<p>Github</p>
 					<p class="quote">PostCSS.parts</p>
 					<a href="https://github.com/postcss/postcss/blob/master/docs/plugins.md" class="src">https://github.com/postcss/postcss/blob/master/docs/plugins.md</a><br>
@@ -104,11 +93,16 @@ gulp.task('postcss', function() {
 				</section>
 				<section data-transition="zoom fade-out">
 					<h3>Types de plugins</h3>
-					<p>Aucun "input" de la part de l'utilisateur</p>
-					<p><em>(Optimisation / Statistiques / Analyse / Fallback)</em></p>
+					<div class="fragment fade-up">
+						<p>Aucun "input" de la part de l'utilisateur</p>
+						<p><em><span class="fragment fade-up">(Optimisation</span><span class="fragment fade-up"> / Statistiques</span><span class="fragment fade-up"> / Analyse </span><span class="fragment fade-up">/ Fallback)</span></em></p>
+					</div>
+					<div class="fragment fade-up">
 					<br><br>
 					<p>Sugar Coating</p>
-					<p><em>(CSS4 Syntax (Transpiler) / Nouvelles syntaxes / Conversions explicites)</em>	</p>
+					<p><em><span class="fragment fade-up">(CSS4 Syntax (Transpiler)</span><span class="fragment fade-up"> / Nouvelles syntaxes</span><span class="fragment fade-up"> / Conversions explicites)</span></em>
+					</p>
+					</div>
 				</section>
 				<section>
 					<h3>CSS Nano(Pack) - plus que de la minification</h3>
@@ -129,14 +123,17 @@ color: red;
 /* reduce position values */
 background-position: bottom right;
 background-position: 100% 100%;
+
+z-index: 100;
+z-index: 1000;
+z-index: 1;
+z-index: 2;
 						</code>
 					</pre>
 				</section>
 				<section>
 				<table>
 					<tbody>
-						
-					</tbody>
 					<tr>
 						<td>Original (gzip)</td>
 						<td>275 B</td>
@@ -197,73 +194,12 @@ a {
 					</code>
 					</pre>
 				</section>
-				<section>
-					<h3>Cache Buster</h3>
-					<pre>
-						<code>
-.foo {
-    background-image : url('../images/index/logo.png');
-}
-
-// options dont : mtime, checksum
-.foo {
-    background-image : url('../images/index/logo.png?v14f32a475b8')
-}
-						</code>
-					</pre>
-				</section>
-				<section>
-					<h3>Problème</h3>
-					<pre>
-						<code class="css" contenteditable>
-<!-- input -->
-.modal {
-    z-index: 10
-}
-
-...
-
-.modal-overlay {
-    z-index: 5500
-}
-
-...
-
-.fixed-banner {
-    z-index: 9999
-}
-					</code>
-					</pre>
-				</section>
-				<section>
-					<h3>Solution</h3>
-					<pre>
-						<code class="css" contenteditable>
-<!-- output -->
-.modal {
-    z-index: 1
-}
-
-...
-
-.modal-overlay {
-    z-index: 2
-}
-
-...
-
-.fixed-banner {
-    z-index: 3
-}
-					</code>
-					</pre>
-				</section>
-				<section>
+								<section>
 					<img src="images/wiki.jpg" alt="">
 				</section>
 				<section>
 					<pre>
-						<code>
+						<code contenteditable>
 a {
     left: 10px;
     text-align: left;
@@ -274,6 +210,22 @@ a {
 a {
     right: 10px;
     text-align: right;
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Cache Buster</h3>
+					<pre>
+						<code>
+.foo {
+    background-image : url('../images/index/logo.png');
+}
+
+// options dont : mtime, checksum
+// résultat
+.foo {
+    background-image : url('../images/index/logo.png?v14f32a475b8')
 }
 						</code>
 					</pre>
@@ -292,9 +244,9 @@ a {
 					</pre>
 				</section>
 				<section>
-					<h3>custom media queries</h3>
+					<h3>custom media queries + media queries ranges</h3>
 					<pre>
-						<code>
+						<code contenteditable>
 @custom-media --small-viewport (max-width: 30em);
 
 @media (--small-viewport) {
@@ -304,9 +256,9 @@ a {
 					</pre>
 				</section>
 				<section>
-					<h3>custom media queries</h3>
+					<h3>Custom media queries & Nesting</h3>
 					<pre>
-						<code>
+						<code contenteditable>
 .brand {
     font-size: 16px;
     @media (--small-viewport) {
@@ -327,9 +279,9 @@ a {
 
 // result
 .boo img {
-  max-width:100%;
-  height:auto;
-  display:block;
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 						</code>
 					</pre>
@@ -373,27 +325,90 @@ a {
 					<img src="images/grid.png" alt="">
 				</section>
 				<section>
-					<h3>PostCSS Colorblind</h3>
-					<img src="images/colorblind-before.jpg" alt="" width="450px">
-					<img src="images/colorblind-after.jpg" alt="" width="450px">
+					<img src="images/style-guide-default.png" alt="">
 				</section>
 				<section>
-					<h3>POSTCss Colorblind</h3>
 					<pre>
-						<code>
-// terminal
-$ npm install postcss-colorblind --save-dev
+						<code contenteditable>
+@styleguide
+@title Button
+Use the button classes on and a, button, input elements.
 
+<button class="button button--large button--red">Red Button</button>
+
+<button class="button button--large button--red">Red Button</button>
+
+<button class="button button--large button--blue">Red Button</button>
+
+<button class="button button--large button--blue">Red Button</button>
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.button--large {
+    width: 140px;
+    height: 40px;
+    font-size: 14px;
+}
+
+.button--red {
+    color: #fff;
+    background-color: var(--red);
+}
+
+.button--blue {
+    color: #fff;
+    background-color: var(--blue);
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Vice Versa</h3>
+					<p>Possible de compiler son css via un fichier de config yaml ou autre</p>
+				</section>
+				<section>
+					A PostCSS plugin to create a custom vertical rhythm unit from the base font-size and line-height.
+					<pre>
+						<code contenteditable>
+// set base height exemple 16px
+.card {
+    margin-bottom: 1vr; // 16px
+    line-height: 1.5vr; // 24px
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<p>postcss-instagram</p>
+					<pre>
+						<code contenteditable>
+// instagram
+.boo {
+    filter: earlybird;
+}
+					</code>
+					<img src="https://github.com/azat-io/postcss-instagram/raw/master/images/earlybird.jpg?raw=true" alt="" class="fragment fade-up">
+					</pre>
+				</section>
+				<section>
+					<h3>PostCSS Colorblind</h3>
+<pre class="fragment fade-up">
+<code contenteditable>
 // gulpfile.js
 var colorblind = require("postcss-colorblind");
-
-gulp.task('postcss', function() {
+</code>
+</pre>
+<pre class="fragment fade-up">
+	<code contenteditable>
+gulp.task('postcss-cblind', function() {
     var processors = [
-        colorFunction(
-             object
-        ),
-        pseudoEnter(),
-        postcssZindex(),
+        ...
         colorblind(tritanomaly)
      ];
 }
@@ -401,27 +416,24 @@ gulp.task('postcss', function() {
 					</pre>
 				</section>
 				<section>
+					<h3>PostCSS Colorblind</h3>
+					<img src="images/colorblind-before.jpg" alt="" width="450px">
+					<img src="images/colorblind-after.jpg" alt="" width="450px">
+				</section>
+				<section>
+					<p>postcss-get-color</p>
+					<p>PostCSS plugin to get the prominent colors from an image.</p>
+					<br><br>
+					<p>css-colorguard</p>
+					<p>Keep a watchful eye on your css colors.</p>
+					<br><br>
+					<p>postcss-colors-only</p>
+					<p>PostCSS plugin to remove all rules except those which contain one or more colors.</p>
+					<p>Parfait pour "themer"</p>
+				</section>
+				<section>
 					<h3>Les plugins = JS</h3>
 					<p>Simple a créer</p>
-				</section>
-				<section>
-					<h3>Besoin</h3>
-					<pre>
-						<code class="css" contenteditable>
-<!-- input -->
-.header--title {
-    font-size: 22px;
-}
-
-<!-- output -->
-.header--title {
-    font-size: 1.375rem;
-}
-						</code>
-					</pre>
-				</section>
-				<section>
-					<p>Sachant que 16px = 1rem</p>
 				</section>
 				<section>
 					<h3>Plugin</h3>
@@ -453,7 +465,7 @@ function (css) {
 					<h3>
 						Have fun</h3>
 					<pre>
-						<code>
+						<code contenteditable>
 .canada {
     colour: #efefef!sorry;
 }
