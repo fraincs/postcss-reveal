@@ -11,11 +11,8 @@
 				<section class="intro">
 					<div class="intro-content">
 						<h2 class="intro--subtitle"><strong>PostCSS</strong>The Shape of CSS to come</h2>
-						<span class="intro--text">A presentation about css in 45 slides</span>
+						<span class="intro--text">A presentation about css in 50 slides</span>
 					</div>
-				</section>
-				<section>
-					<img src="images/postcss.png" alt="PostCSS Logo" class="img" width="300">
 				</section>
 				<section>
 					<h2 class="intro">Historique</h2>
@@ -36,6 +33,7 @@
 				</section>
 				<section>
 					<h2 class="intro">Évolution</h2>
+					<img src="images/postcss.png" alt="">
 				</section>
 				<section class="russia"></section>
 				<section>
@@ -51,6 +49,8 @@
 					<p class="quote fragment fade-up">PostCSS is used by industry leaders including <mark>Wikipedia, Twitter, Alibaba, and JetBrains</mark>. The <mark>Autoprefixer PostCSS plugin</mark> is one of the most popular CSS processors.</p>
 				</section>
 				<section>
+					<p>Everything that can be written in JS will be written in JS</p>
+					<p>Fonctionnement</p>
 					<img src="images/postcss-core-transparent.png">
 				</section>
 				<section>
@@ -65,11 +65,32 @@ var postcssZindex = require('postcss-zindex');
 
 gulp.task('postcss', function() {
     var processors = [
-        colorFunction(
-             object
-        ),
-        pseudoEnter(),
-        postcssZindex()		
+        colorFunction(),
+        cssNano({
+            zindex: false
+        }),
+        autoprefixer({browsers: ['last 2 version', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']}),
+        pseudoEnter()
+     ];
+}
+</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Usage (Gulp)</h3>
+					<pre>
+						<code contenteditable>
+...
+
+var cssNanoOpts = {
+    zindex: false
+}
+
+gulp.task('postcss', function() {
+    var processors = [
+        colorFunction(),
+        cssNano(cssNanoOpts),
+        pseudoEnter()
      ];
 }
 </code>
@@ -94,24 +115,21 @@ gulp.task('postcss', function() {
 				<section data-transition="zoom fade-out">
 					<h3>Types de plugins</h3>
 					<div class="fragment fade-up">
-						<p>Aucun "input" de la part de l'utilisateur</p>
+						<p>Autonomes</p>
 						<p><em><span class="fragment fade-up">(Optimisation</span><span class="fragment fade-up"> / Statistiques</span><span class="fragment fade-up"> / Analyse </span><span class="fragment fade-up">/ Fallback)</span></em></p>
 					</div>
 					<div class="fragment fade-up">
 					<br><br>
 					<p>Sugar Coating</p>
-					<p><em><span class="fragment fade-up">(CSS4 Syntax (Transpiler)</span><span class="fragment fade-up"> / Nouvelles syntaxes</span><span class="fragment fade-up"> / Conversions explicites)</span></em>
+					<p><em><span class="fragment fade-up">(CSS4 Syntax (Transpiler)</span><span class="fragment fade-up"> / Nouvelles propriétées)</span></em>
 					</p>
 					</div>
 				</section>
 				<section>
-					<h3>CSS Nano(Pack) - plus que de la minification</h3>
+					<h3 class="plugin">CSS Nano (Pack)</h3>
+					<p>Plus que de la minification</p>
 					<pre>
 						<code class="css" contenteditable>
-/* normalize selectors */
-h1::before, h1:before {
-h1:before {
-
 /* reduce shorthand even further */
 margin: 10px 20px 10px 20px;
 margin: 10px 20px;
@@ -120,14 +138,13 @@ margin: 10px 20px;
 color: #ff0000;
 color: red;
 
-/* reduce position values */
-background-position: bottom right;
-background-position: 100% 100%;
-
+/* Reduce z-index */
 z-index: 100;
 z-index: 1000;
 z-index: 1;
 z-index: 2;
+
+<!-- et plus -->
 						</code>
 					</pre>
 				</section>
@@ -153,9 +170,12 @@ z-index: 2;
 				</section>
 				<section>
 					<h3>Problème</h3>
-					<img src="images/dory.jpg" alt="" width="300">
+					<img src="images/dory.jpg" alt="">
+				</section>
+				<section>
+					<h3 class="plugin">Autoprefixr</h3>
 					<pre>
-						<code class="css" contenteditable>
+						<code contenteditable>
 a {
     display: -webkit-box;
     display: -webkit-flex;
@@ -164,15 +184,23 @@ a {
 }
 					</code>
 					</pre>
+
 				</section>
 				<section>
 					<h3>Solution</h3>
-					<p>Just write normal CSS according to the latest W3C specs and Autoprefixer will produce the code for old browsers.</p>
 					<pre>
-						<code class="css" contenteditable>
-    a {
-        display: flex;
-    }
+						<code contenteditable>
+a {
+	display: flex;
+}
+
+// résultat
+a {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
 					</code>
 					</pre>
 				</section>
@@ -194,10 +222,12 @@ a {
 					</code>
 					</pre>
 				</section>
-								<section>
+				<section>
+					<h3 class="plugin">rtlcss</h3>
 					<img src="images/wiki.jpg" alt="">
 				</section>
 				<section>
+					<h3 class="plugin">rtlcss</h3>
 					<pre>
 						<code contenteditable>
 a {
@@ -206,7 +236,6 @@ a {
 }
 
 // rtl
-
 a {
     right: 10px;
     text-align: right;
@@ -215,7 +244,7 @@ a {
 					</pre>
 				</section>
 				<section>
-					<h3>Cache Buster</h3>
+					<h3 class="plugin">Cache Buster</h3>
 					<pre>
 						<code>
 .foo {
@@ -231,46 +260,61 @@ a {
 					</pre>
 				</section>
 				<section>
-					<h3>CSS4 Syntax</h3>
+					<h3 class="plugin">CSS Next</h3>
 					<pre>
-						<code class="css" contenteditable>
+						<code contenteditable>
+:root {
+  --mainColor: red;
+  --row: 12;
+}
+
 @custom-selector --heading h1, h2, h3, h4, h5, h6;
 
 .post-article --heading {
     margin-top: calc(10 * var(--row));
     color: color( var(--mainColor) blackness(+20%) );
-    font-variant-caps: small-caps;
-}						</code>
+}
+
+// résultat
+.post-article h1, h2, h3, h4, h5, h6 {
+    margin-top: 120px;
+    color: #AA0E00;
+}
+
+
+</code>
 					</pre>
 				</section>
 				<section>
-					<h3>custom media queries + media queries ranges</h3>
+					<h3 class="plugin">CSS Next</h3>
+					<p>Semantic media queries</p>
 					<pre>
 						<code contenteditable>
-@custom-media --small-viewport (max-width: 30em);
+@custom-media --medium-viewport (min-width: 30em);
 
-@media (--small-viewport) {
-    /* styles for small viewport */
+@media (--medium-viewport) {
+    /* styles for medium viewport */
 }
 						</code>
 					</pre>
 				</section>
 				<section>
-					<h3>Custom media queries & Nesting</h3>
+					<h3 class="plugin">CSS Next / postcss-nesting</h3>
+					<p>Custom media queries & nesting</p>
 					<pre>
 						<code contenteditable>
 .brand {
-    font-size: 16px;
-    @media (--small-viewport) {
-        /* styles for small viewport */
-        font-size: 12px;
+    font-size: 12px;
+    @media (--medium-viewport) {
+        /* styles for medium viewport */
+        font-size: 16px;
     }
 }
 						</code>
 					</pre>
 				</section>
 				<section>
-					<h3>Sugar Coating</h3>
+					<h3 class="plugin">postcss-responsive-images</h3>
 					<pre>
 						<code>
 .boo img {
@@ -287,6 +331,7 @@ a {
 					</pre>
 				</section>
 				<section>
+					<h3 class="plugin">Lost</h3>
 					<h3>Grille / Abstraction</h3>
 					<pre>
 						<code class="css" contenteditable>
@@ -296,7 +341,7 @@ a {
 						</code>
 					</pre>
 				</section>
-								<section>
+				<section>
 					<h3>Grille - résultat</h3>
 					<pre>
 						<code class="css" contenteditable>
@@ -325,23 +370,38 @@ a {
 					<img src="images/grid.png" alt="">
 				</section>
 				<section>
+					<h3 class="plugin">postcss-style-guide</h3>
 					<img src="images/style-guide-default.png" alt="">
 				</section>
 				<section>
 					<pre>
 						<code contenteditable>
+/* @start color */
+:root {
+    --red: #e23B00;
+    --blue: #3f526b;
+    --black: #000;
+    --background: #faf8f5;
+}
+/* @end color */
+						</code>
+					</pre>
+				</section>
+				<section>
+					<pre>
+						<code>
+/*
 @styleguide
+
 @title Button
+
 Use the button classes on and a, button, input elements.
 
 <button class="button button--large button--red">Red Button</button>
-
 <button class="button button--large button--red">Red Button</button>
-
 <button class="button button--large button--blue">Red Button</button>
-
 <button class="button button--large button--blue">Red Button</button>
-
+*/
 .button {
     display: flex;
     align-items: center;
@@ -373,19 +433,7 @@ Use the button classes on and a, button, input elements.
 					<p>Possible de compiler son css via un fichier de config yaml ou autre</p>
 				</section>
 				<section>
-					A PostCSS plugin to create a custom vertical rhythm unit from the base font-size and line-height.
-					<pre>
-						<code contenteditable>
-// set base height exemple 16px
-.card {
-    margin-bottom: 1vr; // 16px
-    line-height: 1.5vr; // 24px
-}
-						</code>
-					</pre>
-				</section>
-				<section>
-					<p>postcss-instagram</p>
+					<h3 class="plugin">postcss-instagram</h3>
 					<pre>
 						<code contenteditable>
 // instagram
@@ -393,11 +441,11 @@ Use the button classes on and a, button, input elements.
     filter: earlybird;
 }
 					</code>
-					<img src="https://github.com/azat-io/postcss-instagram/raw/master/images/earlybird.jpg?raw=true" alt="" class="fragment fade-up">
 					</pre>
+					<img src="https://github.com/azat-io/postcss-instagram/raw/master/images/earlybird.jpg?raw=true" alt="" class="fragment fade-up">
 				</section>
 				<section>
-					<h3>PostCSS Colorblind</h3>
+					<h3 class="plugin">PostCSS Colorblind</h3>
 <pre class="fragment fade-up">
 <code contenteditable>
 // gulpfile.js
@@ -416,37 +464,63 @@ gulp.task('postcss-cblind', function() {
 					</pre>
 				</section>
 				<section>
-					<h3>PostCSS Colorblind</h3>
+					<h3 class="plugin">PostCSS Colorblind</h3>
 					<img src="images/colorblind-before.jpg" alt="" width="450px">
 					<img src="images/colorblind-after.jpg" alt="" width="450px">
 				</section>
 				<section>
-					<p>postcss-get-color</p>
+					<h3 class="plugin">postcss-get-color</h3>
 					<p>PostCSS plugin to get the prominent colors from an image.</p>
-					<br><br>
-					<p>css-colorguard</p>
-					<p>Keep a watchful eye on your css colors.</p>
-					<br><br>
-					<p>postcss-colors-only</p>
-					<p>PostCSS plugin to remove all rules except those which contain one or more colors.</p>
-					<p>Parfait pour "themer"</p>
+					<img src="images/getcolor.png" alt="">
+					<img src="images/getcolor2.png" alt="">
 				</section>
+				<section>
+					<h3 class="plugin">css-colorguard</h3>
+					<p>Keep a watchful eye on your css colors.</p>
+					<img src="images/colorguard.png" alt="">
+				</section>
+				<section>
+					<h3 class="plugin">postcss-colors-only</h3>
+					<p>PostCSS plugin to remove all rules except those which contain one or more colors.</p>
+					<pre>
+						<code contenteditable>
+// input
+.card {
+    margin-top: 15px;
+    background-color: teal;
+    padding: 15px;
+    color: red;
+}
+
+// output
+.card {
+    background-color: teal;
+    color: red;
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3 class="plugin">PRE CSS - Pack</h3>
+					<p>mixins, imports, nesting, etc</p>
+					<img src="images/precss.png">
+				</section>
+
 				<section>
 					<h3>Les plugins = JS</h3>
 					<p>Simple a créer</p>
+					<p>PostCSS API</p>
 				</section>
 				<section>
 					<h3>Plugin</h3>
 					<pre>
-						<code contenteditable>
-function (css) {
-    css.eachDecl( decl => {
-        decl.value = decl.value.replace(/\d+rem/, rem => {
-            return 16 * parseFloat(rem) + 'px';
-        });
-    });
-};
-						</code>
+						<code class="js" contenteditable>
+function (css, result) {
+    // Runs through all of the nodes (declarations) in the file
+    css.walkDecls(declaration => { 
+    declaration.value = declaration.value.split('').reverse().join(''); 
+});
+</code>
 					</pre>
 				</section>
 				<section>
@@ -462,19 +536,8 @@ function (css) {
 					<img src="images/listapart.png" alt="">
 				</section>
 				<section>
-					<h3>
-						Have fun</h3>
-					<pre>
-						<code contenteditable>
-.canada {
-    colour: #efefef!sorry;
-}
-
-.span {
-    colour: grey;
-}
-						</code>
-					</pre>
+					<p>Everything that can be written in JavaScript will eventually be written in JavaScript.</p>
+					<p><em>&mdash; Atwood's Law</em></p>
 				</section>
 			</div>
 		</div>
@@ -512,6 +575,7 @@ function (css) {
 			}
 			.reveal h3 {
 				text-transform: initial;
+				margin-bottom: 0;
 			}
 			.reveal h2.intro--subtitle {
 				line-height: 1;
@@ -561,6 +625,11 @@ function (css) {
 				background: #3f3f3f;
 				padding: 25px;
 			}
+			.reveal h3.plugin {
+				color: teal;
+				text-transform: uppercase;
+				margin-bottom: 0;
+			}
 			.intro-content {
 				width: 100%;
 				float: left;
@@ -578,7 +647,7 @@ function (css) {
 				dependencies: [
 					{ src: './node_modules/reveal.js/plugin/markdown/marked.js' },
 					{ src: './node_modules/reveal.js/plugin/markdown/markdown.js' },
-					{ src: './node_modules/reveal.js/plugin./notes/notes.js', async: true },
+					{ src: './node_modules/reveal.js/plugin/notes/notes.js', async: true },
 					{ src: './node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
